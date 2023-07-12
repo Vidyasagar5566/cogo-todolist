@@ -39,6 +39,10 @@ function details1() {
 
 function details2() {
 
+	if (array.length == 0){
+		alert("NO Tasks was found")
+	}
+
     let list = document.getElementById("UnList");
     if (list) {
         while (list.firstChild) {
