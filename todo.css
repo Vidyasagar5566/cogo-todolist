@@ -19,7 +19,7 @@
 	height: 500px;
 	overflow: auto;
 	float: right;
-	padding:10px;
+	padding:30px;
 }
 .button {
 	height:40px;
@@ -59,7 +59,7 @@
 	width: 90%;
 	height: 2000px;
 	margin:20px;
-	padding:10px;
+	padding:30px;
 }
 
 .button {
