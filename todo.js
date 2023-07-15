@@ -22,14 +22,12 @@ fetch('https://jsonplaceholder.typicode.com/todos').then((response) => {
             list.removeChild(list.firstChild);
         }
     }
-    var ctr = 0;
       array.forEach((item)=> {
          var li = document.createElement('li');
          li.innerText =  item;
          var li1 = document.createElement('hr');
          list.appendChild(li);
          list.appendChild(li1);
-         ctr++;
       })
 
     console.log(array);
@@ -38,7 +36,6 @@ fetch('https://jsonplaceholder.typicode.com/todos').then((response) => {
       // Handle any errors that occurred during the fetch request
       console.log('Error:', error.message);
     });
-console.log(array);
 
 function details() {
 	var in1 = document.getElementById("input1").value;
@@ -58,14 +55,12 @@ function details() {
             list.removeChild(list.firstChild);
         }
     }
-    var ctr = 0;
       array.forEach((item)=> {
          var li = document.createElement('li');
          li.innerText = item;
          var li1 = document.createElement('hr');
          list.appendChild(li);
          list.appendChild(li1);
-         ctr++;
       })
 
     
@@ -95,14 +90,12 @@ function details1() {
             list.removeChild(list.firstChild);
         }
     }
-    var ctr = 0;
       array.forEach((item)=> {
          var li = document.createElement('li');
          li.innerText = item;
          var li1 = document.createElement('hr');
          list.appendChild(li);
          list.appendChild(li1);
-         ctr++;
       })
 
 }
