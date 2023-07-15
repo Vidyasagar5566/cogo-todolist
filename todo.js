@@ -1,18 +1,72 @@
-var array = new Map();
+var array = [];
+
+fetch('https://jsonplaceholder.typicode.com/todos').then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not OK');
+      }
+      return response.json();
+    }).then((data) => {
+      data.forEach((item)=>{
+      	console.log(item.title);
+        array.push(item.title);
+      })
+
+    
+    if (array.length == 0){
+		alert("NO Tasks was found")
+	}
+
+    let list = document.getElementById("UnList");
+    if (list) {
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+    }
+    var ctr = 0;
+      array.forEach((item)=> {
+         var li = document.createElement('li');
+         li.innerText =  item;
+         var li1 = document.createElement('hr');
+         list.appendChild(li);
+         list.appendChild(li1);
+         ctr++;
+      })
+
+    console.log(array);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch request
+      console.log('Error:', error.message);
+    });
+console.log(array);
 
 function details() {
 	var in1 = document.getElementById("input1").value;
-	var in2 = document.getElementById("input2").value;
 
-	if (in1.length == 0 || in2.length == 0){
+	if (in1.length == 0){
 		alert("task or id can't be null")
 	}
 	else{
-		array.set(in2,in1);
+		array.splice(0,0,in1);
 		alert("task Added successfully")
 	}
 
-	console.log(array);
+
+	let list = document.getElementById("UnList");
+    if (list) {
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+    }
+    var ctr = 0;
+      array.forEach((item)=> {
+         var li = document.createElement('li');
+         li.innerText = item;
+         var li1 = document.createElement('hr');
+         list.appendChild(li);
+         list.appendChild(li1);
+         ctr++;
+      })
 
     
 }
@@ -24,8 +78,8 @@ function details1() {
 		alert("task or id can't be null")
 	}
 	else{
-		if (array.has(in1)){
-		array.delete(in1);
+		if (true){
+		array.splice(parseInt(in1) - 1,1);
 		alert("task deleted successfully")
 		}
 		else {
@@ -33,26 +87,22 @@ function details1() {
 		}
 		
 	}
-	console.log(array);
 
-}
-
-function details2() {
-
-	if (array.length == 0){
-		alert("NO Tasks was found")
-	}
-
-    let list = document.getElementById("UnList");
+	
+	let list = document.getElementById("UnList");
     if (list) {
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
     }
-      array.forEach (function(value, key)  {
+    var ctr = 0;
+      array.forEach((item)=> {
          var li = document.createElement('li');
-         li.innerText = key + " : " + value;
+         li.innerText = item;
+         var li1 = document.createElement('hr');
          list.appendChild(li);
+         list.appendChild(li1);
+         ctr++;
       })
-    console.log(array);
+
 }

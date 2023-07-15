@@ -1,12 +1,26 @@
+  body {
+    background-color: lightgreen;
+  }
 .login {
-	margin-top: 100px;
+	margin-top: 50px;
 	padding: 20px;
-	width:40%;
-	margin-left:30%;
+	width:35%;
+	margin-left:2%;
 	background-color:gray;
 	border-radius:10px;
+	float: left;
 }
 
+.tasks {
+	background-color:gray;
+	border-radius:15px;
+	margin:20px;
+	width: 50%;
+	height: 500px;
+	overflow: auto;
+	float: right;
+	padding:10px;
+}
 .button {
 	height:40px;
 	width:30%;
@@ -24,7 +38,6 @@
 	text-align: center;
 }
 
-
 @media screen and (max-width: 680px) {
   body {
     background-color: lightgreen;
@@ -33,10 +46,20 @@
   .login {
 	margin-top: 100px;
 	padding: 20px;
-	width:100%;
-	margin-left:0%;
+	width:80%;
+	margin-left:10%;
 	background-color:gray;
 	border-radius:10px;
+}
+
+.tasks {
+	background-color:gray;
+	border-radius:15px;
+	float: left;
+	width: 90%;
+	height: 2000px;
+	margin:20px;
+	padding:10px;
 }
 
 .button {
@@ -56,5 +79,4 @@
 	text-align: center;
 }
 }
-
 
