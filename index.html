@@ -1,48 +1,79 @@
 <!DOCTYPE html>
-<html>
-   <meta charset="UTF-8" />
-   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Todo List</title>
-	<link rel="stylesheet" type="text/css" href="todo.css">
-	<script type="text/javascript" src ="todo.js"></script>
-</head>
-<body>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">  
+    <title>Todo List App in JavaScript | CodingNepal</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <!-- Iconscout Link For Icons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  </head>
+  <body>
 
-	<h1 style="text-align: center;">Welcome To Todo List</h1>
+    <h1 style="text-align: center;color: white;">Welcome to todo list</h1>
 
-  <form class = "login">
-    <h1 style = "text-align:center;">Enter the below details</h1>
-    <p style = "margin-left:10%;">Task Name</p>
-    <p style = "text-align:center;"><input type="text" id = "input1" style = "text-align:center;font-size:25px; border-radius:5px;height:30px;width:80%;"></p>
+    <div class="wrapper">
 
-    <button class = "button" onclick = "details();" type="reset">ADD</button> 
+      <div class="task-input">
+        <input type="text" placeholder="Add a new task">
+      </div>
+      <div class="task-input1">
+        <input type="hidden" placeholder="Add a new task">
+        <select style="height: 30px;width: 60px;" onChange="catogery_func(this);">
+            <option style="height: 30px;width: 60px;">A</option>
+            <option style="height: 30px;width: 60px;">B</option>
+        </select>
+        <span style="margin-left: 10px;">Select Catogery</span>
+      </div>
+      <div class="task-input2">
+        <input type="hidden" placeholder="Add a new task">
+        <select style="height: 30px;width: 60px;" onChange="tag_func(this);">
+            <option style="height: 30px;width: 60px;">Office Work</option>
+            <option style="height: 30px;width: 60px;">Home Work</option>
+        </select>
+        <span style="margin-left: 10px;">Select Tag</span>
+      </div>
+      <div class="task-input3">
+        <input type="hidden" placeholder="Add a new task">
+        <select style="height: 30px;width: 60px;" onChange="priority_func(this);">
+            <option style="font-size: 30px;">low</option>
+            <option style="height: 30px;width: 60px;">medium</option>
+            <option style="height: 30px;width: 60px;">high</option>
+        </select>
+        <span style="margin-left: 10px;">Select Priority</span>
+      </div>
+      <div class="task-input4">
+        <input type="date" placeholder="Add a due date">
+      </div>
 
+      <div class="task-input">
+        <input type="submit" class="add_task_button" style="background-color: blueviolet;text-align: center;">
+      </div>
 
-    <p style = "margin-left:10%;">Enter Id To Delete Task</p>
-    <p style = "text-align:center;"><input type="text" id = "input3" style = "text-align:center;font-size:25px; border-radius:5px;height:30px;width:80%;"></p>
+    </div>
 
-    <button class = "button" onclick = "details1();" type="reset">Delete</button>
+    <div class="wrapper1">
 
-    <hr style = "background-color:grey; height:13px; margin-bottom:30px; width:80%;">
-
- 
-  </form>
-
-
-  <section class="tasks">
-    <p id = "out1" style = "text-align:center;font-size:25px;"></p>
-    <h3 style = "text-align:center;font-size:25px;"> List of all the tasks</h3>
-   <ol id="UnList">
-   	
-   </ol>
-  </section>
-
-
-
-<hr style = "background-color:yellow; height:3px; margin-bottom:30px; width:80%;">
-
-
-
-</body>
+      <div class="controls">
+        <div class="filters">
+          <span class="active" id="all">All</span>
+          <span id="pending">Pending</span>
+          <span id="completed">Completed</span>
+          <span id="low">High</span>
+          <span id="medium">Low</span>
+          <span id="high">Medium</span>
+          <span id="A">A-Cat</span>
+          <span id="B">B-Cat</span>
+          <span id="Home Work">HOME</span>
+          <span id="Office Work">OFFICE</span>
+        </div>
+        <button class="clear-btn">Clear All</button>
+      </div>
+      
+      <ul class="task-box"></ul>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
