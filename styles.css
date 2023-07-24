@@ -220,6 +220,11 @@ body{
 .settings li i{
   padding-right: 8px;
 }
+
+#eit-del-option {
+    height: 10px;
+    width: 10px;
+}
 @media (max-width: 400px) {
   body{
     padding: 0 10px;

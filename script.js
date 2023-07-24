@@ -7,7 +7,7 @@ function catogery_func(sel1) {
   }
 
 const taskInput2 = document.querySelector(".task-input2 input");
-taskInput2.text = "School Work";
+taskInput2.text = "home Work";
 function tag_func(sel2) {
     taskInput2.text = sel2.options[sel2.selectedIndex].text;
   }
@@ -40,7 +40,14 @@ function showTodo(filter) {
         todos.forEach((todo, id) => {
             let completed = todo.status == "completed" ? "checked" : "";
             if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag) {
-                liTag += `<li class="task">
+                liTag += `
+                <h3>Add/View subtasks</h3>
+                        <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                        <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
+                        <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
+                        <h3>Main Task</h3>
+                        <p>${todo.sub_task}</p>
+                        <li class="task">
                             <label for="${id}">
                                 <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
                                 <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
@@ -50,7 +57,7 @@ function showTodo(filter) {
                                 <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
                             </label>
                             <div class="settings">
-                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
                                 <ul class="task-menu">
                                     <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
                                     <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
@@ -66,6 +73,22 @@ function showTodo(filter) {
     taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 showTodo("all");
+
+
+function view_sub_tasks(id) {
+    alert(todos[id].sub_task);
+}
+function Add_sub_tasks(id) {
+    const taskInput5 = document.querySelector(".sub_task_input");
+    var text = taskInput5.text;
+    taskInput5.value = "";
+    sub_tatodos[id].sub_tasksks.splice(0, 0, text);
+    localStorage.setItem("todo-list", JSON.stringify(todos));
+    showTodo(document.querySelector("span.active").id);
+    showTodo("all");
+
+}
+
 function showMenu(selectedTask) {
     let menuDiv = selectedTask.parentElement.lastElementChild;
     menuDiv.classList.add("show");
@@ -101,11 +124,7 @@ function editTask(taskId, name,catogery,tag,priority,due_date) {
     taskInput2.focus();
     taskInput3.focus();
     taskInput4.focus();
-    taskInput.classList.add("active");
-    taskInput1.classList.add("active");
-    taskInput2.classList.add("active");
-    taskInput3.classList.add("active");
-    taskInput4.classList.add("active");
+
 }
 function deleteTask(deleteId, filter) {
     isEditTask = false;
@@ -128,7 +147,7 @@ add_task.addEventListener("click", () => {
 
         if(!isEditTask) {
             todos = !todos ? [] : todos;
-            let taskInfo = {name: userTask, status: "pending",
+            let taskInfo = {name: userTask,sub_task:["test"], status: "pending",
                             catogery:userTask1,tag:userTask2,priority:userTask3,due_date:userTask4};
             todos.splice(0, 0, taskInfo); 
         } else {
