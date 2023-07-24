@@ -72,6 +72,50 @@ function showTodo(filter) {
     !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
     taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
+
+function fetchTodos(){
+
+    var filter = document.getElementById('input-search').value;
+    let liTag = "";
+    if(todos) {
+        todos.forEach((todo, id) => {
+            let completed = todo.status == "completed" ? "checked" : "";
+            if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag || filter == todo.due_date) {
+                liTag += `
+                <h3>Add/View subtasks</h3>
+                        <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                        <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
+                        <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
+                        <h3>Main Task</h3>
+                        <p>${todo.sub_task}</p>
+                        <li class="task">
+                            <label for="${id}">
+                                <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
+                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
+                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">CATOGERY    :-</span>${ todo.catogery}</p>
+                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TAG    :-</span>${ todo.tag}</p>
+                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">PRIORITY     :-</span>${ todo.priority}</p>
+                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
+                            </label>
+                            <div class="settings">
+                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
+                                <ul class="task-menu">
+                                    <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
+                                    <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
+                                </ul>
+                            </div>
+                        </li>`;
+            }
+        });
+    }
+    taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
+    let checkTask = taskBox.querySelectorAll(".task");
+    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+    taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+}
+
+
+
 showTodo("all");
 
 
