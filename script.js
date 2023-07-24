@@ -80,7 +80,7 @@ function fetchTodos(){
     if(todos) {
         todos.forEach((todo, id) => {
             let completed = todo.status == "completed" ? "checked" : "";
-            if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag || filter == todo.due_date) {
+            if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag || filter == todo.due_date || todo.name.includes(filter)) {
                 liTag += `
                 <h3>Add/View subtasks</h3>
                         <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
