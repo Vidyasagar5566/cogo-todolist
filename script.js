@@ -42,7 +42,7 @@ function showTodo(filter) {
             if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag) {
                 liTag += `
                 <section draggable="true" style = "cursor: grab;" class = "task" data-id="${id}"> 
-                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id}</h3>
+                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id + 1}</h3>
                 <br>
                 <li class="task">
                     <label for="${id}">
@@ -68,12 +68,13 @@ function showTodo(filter) {
                 <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
                 <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
                 <ol class="sub-task-box${id}"></ol>
-                </section>
                 <br>
                 <br>
                 <hr>
                 <br>
-                <br>`;
+                <br>
+                </section>
+           `;
 
 
             }
@@ -81,8 +82,8 @@ function showTodo(filter) {
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
-    //!checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 function fetchTodos(){
@@ -95,7 +96,7 @@ function fetchTodos(){
             if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag || filter == todo.due_date || todo.name.includes(filter)) {
                 liTag += `
                 <section draggable="true" style = "cursor: grab;" class = "task" data-id="${id}"> 
-                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id}</h3>
+                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id + 1}</h3>
                 <br>
                 <li class="task">
                     <label for="${id}">
@@ -120,19 +121,20 @@ function fetchTodos(){
                 <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
                 <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
                 <ul class="sub-task-box${id}"></ul>
-                </section>
                 <br>
                 <br>
                 <hr>
                 <br>
-                <br>`;
+                <br>
+                </section>
+               `;
             }
         });
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
-    //!checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 
@@ -144,7 +146,7 @@ function view_sub_tasks(id) {
     var just = ".sub-task-box" + id.toString();
     const subtaskBox = document.querySelector(just);
     todos = JSON.parse(localStorage.getItem("todo-list"));
-    let liTag = "";
+    let liTag = "<h2>Sub Tasks</h2>";
     todos[id].sub_task.forEach((task,id1) => {
         liTag += `<li draggable="true" style = "cursor: grab;" class = "subtask" data-id="${id}/${id1}">${task.sub_task}</li>`;
     });
@@ -157,8 +159,10 @@ function Add_sub_tasks(id) {
     taskInput5.value = "";
     todos[id].sub_task.splice(0, 0, {'sub_task':text});
     localStorage.setItem("todo-list", JSON.stringify(todos));
+
+    view_sub_tasks(id);
     
-    showTodo(document.querySelector("span.active").id);
+    //showTodo(document.querySelector("span.active").id);
 
 
 }
@@ -244,8 +248,7 @@ add_task.addEventListener("click", () => {
         taskInput3.value = "";
         taskInput4.value = "";
         localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo("all");
-        //showTodo(document.querySelector("span.active").id);
+        showTodo(document.querySelector("span.active").id);
     
 });
 
@@ -271,7 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
   
   
   let draggedTask;
-  let draggedsubTask;
 
   
   function dragStart(event) {
@@ -321,6 +323,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get the IDs of the tasks being swapped
     const draggedId = draggedTask.dataset.id;
     const droppedId = event.target.dataset.id;
+    console.log(draggedId);
+    console.log(droppedId);
     var task_id = draggedId.split('/')[0];
     var subtask_draggedId = draggedId.split('/')[1];
     var subtask_droppedId = droppedId.split('/')[1];
