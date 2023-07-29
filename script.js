@@ -63,7 +63,7 @@ function showTodo(filter) {
                     </div>
                 </li>
                 <h6 style = "color:blue;">Add/View subtasks</h6>
-                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input${id}">
                 <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
                 <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
                 <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
@@ -87,7 +87,6 @@ function showTodo(filter) {
 }
 
 function fetchTodos(){
-
     var filter = document.getElementById('input-search').value;
     let liTag = "<h1>Tasks</h1>";
     if(todos) {
@@ -116,7 +115,7 @@ function fetchTodos(){
                     </div>
                 </li>
                 <h6 style = "color:blue;">Add/View subtasks</h6>
-                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input${id}">
                 <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
                 <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
                 <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
@@ -154,7 +153,8 @@ function view_sub_tasks(id) {
 }
 
 function Add_sub_tasks(id) {
-    const taskInput5 = document.querySelector(".sub_task_input");
+    var test = ".sub_task_input" + id.toString();
+    const taskInput5 = document.querySelector(test);
     let text = taskInput5.value.trim();
     taskInput5.value = "";
     todos[id].sub_task.splice(0, 0, {'sub_task':text});

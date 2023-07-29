@@ -148,6 +148,7 @@ body{
   background-color:lightgray;
   border-radius: 10px;
   height: 1000px;
+  overflow: auto;
 }
 
 
