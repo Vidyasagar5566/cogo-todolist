@@ -35,83 +35,104 @@ filters.forEach(btn => {
     });
 });
 function showTodo(filter) {
-    let liTag = "";
+    let liTag = "<h1>Tasks</h1><br>";
     if(todos) {
         todos.forEach((todo, id) => {
             let completed = todo.status == "completed" ? "checked" : "";
             if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag) {
                 liTag += `
-                <h3>Add/View subtasks</h3>
-                        <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
-                        <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
-                        <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
-                        <h3>Main Task</h3>
-                        <p>${todo.sub_task}</p>
-                        <li class="task">
-                            <label for="${id}">
-                                <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">CATOGERY    :-</span>${ todo.catogery}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TAG    :-</span>${ todo.tag}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">PRIORITY     :-</span>${ todo.priority}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
-                            </label>
-                            <div class="settings">
-                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
-                                <ul class="task-menu">
-                                    <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
-                                    <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
-                                </ul>
-                            </div>
-                        </li>`;
+                <section draggable="true" style = "cursor: grab;" class = "task" data-id="${id}"> 
+                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id}</h3>
+                <br>
+                <li class="task">
+                    <label for="${id}">
+                        <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">CATOGERY    :-</span>${ todo.catogery}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">TAG    :-</span>${ todo.tag}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">PRIORITY     :-</span>${ todo.priority}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
+                    </label>
+                    <div class="settings">
+                    
+                        <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
+                        <ul class="task-menu">
+                            <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
+                            <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
+                        </ul>
+                    </div>
+                </li>
+                <h6 style = "color:blue;">Add/View subtasks</h6>
+                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
+                <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
+                <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
+                <ol class="sub-task-box${id}"></ol>
+                </section>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <br>`;
+
+
             }
         });
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
     !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 function fetchTodos(){
 
     var filter = document.getElementById('input-search').value;
-    let liTag = "";
+    let liTag = "<h1>Tasks</h1>";
     if(todos) {
         todos.forEach((todo, id) => {
             let completed = todo.status == "completed" ? "checked" : "";
             if(filter == todo.status || filter == "all" || filter == todo.priority || filter == todo.catogery || filter == todo.tag || filter == todo.due_date || todo.name.includes(filter)) {
                 liTag += `
-                <h3>Add/View subtasks</h3>
-                        <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
-                        <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
-                        <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
-                        <h3>Main Task</h3>
-                        <p>${todo.sub_task}</p>
-                        <li class="task">
-                            <label for="${id}">
-                                <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">CATOGERY    :-</span>${ todo.catogery}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">TAG    :-</span>${ todo.tag}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">PRIORITY     :-</span>${ todo.priority}</p>
-                                <p class="${completed}" style = "clear:left;"><span style = "color:blue;font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
-                            </label>
-                            <div class="settings">
-                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
-                                <ul class="task-menu">
-                                    <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
-                                    <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
-                                </ul>
-                            </div>
-                        </li>`;
+                <section draggable="true" style = "cursor: grab;" class = "task" data-id="${id}"> 
+                <h3 style = "color:blue;font-weight:bold;">Main Task  - ${id}</h3>
+                <br>
+                <li class="task">
+                    <label for="${id}">
+                        <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">TASK    :-</span> ${ todo.name}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">CATOGERY    :-</span>${ todo.catogery}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">TAG    :-</span>${ todo.tag}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">PRIORITY     :-</span>${ todo.priority}</p>
+                        <p class="${completed}" style = "clear:left;"><span style = "font-weight:bold;">DUE-DATE     :-</span>${ todo.due_date}</p>
+                    </label>
+                    <div class="settings">
+                        <i onclick="showMenu(this)" class="uil uil-ellipsis-h" id = "eit-del-option"></i>
+                        <ul class="task-menu">
+                            <li onclick='editTask(${id}, "${todo.name}","${todo.catogery}","${todo.tag}","${todo.priority}","${todo.due_date}")'><i class="uil uil-pen"></i>Edit</li>
+                            <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
+                        </ul>
+                    </div>
+                </li>
+                <h6 style = "color:blue;">Add/View subtasks</h6>
+                <input type = "text" placeholder = "Add subtask here" class = "sub_task_input">
+                <input type = "submit" value = "Add sub-task" onclick="Add_sub_tasks(${id})">
+                <input type = "submit" value = "view-sub-tasks" onclick="view_sub_tasks(${id})">
+                <input type = "submit" value = "close-sub-tasks" onclick="close_sub_tasks(${id})">
+                <ul class="sub-task-box${id}"></ul>
+                </section>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <br>`;
             }
         });
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
     !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 
@@ -120,17 +141,32 @@ showTodo("all");
 
 
 function view_sub_tasks(id) {
-    alert(todos[id].sub_task);
+    var just = ".sub-task-box" + id.toString();
+    const subtaskBox = document.querySelector(just);
+    todos = JSON.parse(localStorage.getItem("todo-list"));
+    let liTag = "";
+    todos[id].sub_task.forEach((task,id1) => {
+        liTag += `<li draggable="true" style = "cursor: grab;" class = "subtask" data-id="${id}/${id1}">${task.sub_task}</li>`;
+    });
+    subtaskBox.innerHTML = liTag;
 }
+
 function Add_sub_tasks(id) {
     const taskInput5 = document.querySelector(".sub_task_input");
-    var text = taskInput5.text;
+    let text = taskInput5.value.trim();
     taskInput5.value = "";
-    sub_tatodos[id].sub_tasksks.splice(0, 0, text);
+    todos[id].sub_task.splice(0, 0, {'sub_task':text});
     localStorage.setItem("todo-list", JSON.stringify(todos));
+    
     showTodo(document.querySelector("span.active").id);
-    showTodo("all");
 
+
+}
+
+function close_sub_tasks(id){
+    var just = ".sub-task-box" + id.toString();
+    const subtaskBox = document.querySelector(just);
+    subtaskBox.innerHTML = '';
 }
 
 function showMenu(selectedTask) {
@@ -191,7 +227,7 @@ add_task.addEventListener("click", () => {
 
         if(!isEditTask) {
             todos = !todos ? [] : todos;
-            let taskInfo = {name: userTask,sub_task:["test"], status: "pending",
+            let taskInfo = {name: userTask,sub_task:[], status: "pending",
                             catogery:userTask1,tag:userTask2,priority:userTask3,due_date:userTask4};
             todos.splice(0, 0, taskInfo); 
         } else {
@@ -211,3 +247,88 @@ add_task.addEventListener("click", () => {
         showTodo(document.querySelector("span.active").id);
     
 });
+
+
+// Drag And Drop Task
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tasks = document.querySelectorAll(".task");
+    const subtasks = document.querySelectorAll(".subtask");
+  
+    tasks.forEach(task => {
+      task.addEventListener("dragstart", dragStart);
+      task.addEventListener("dragover", dragOver);
+      task.addEventListener("drop", drop);
+    });
+
+    subtasks.forEach(subtask => {
+        subtask.addEventListener("dragstart", dragStart1);
+        subtask.addEventListener("dragover", dragOver1);
+        subtask.addEventListener("drop", drop1);
+      });
+  });
+  
+  
+  let draggedTask;
+  let draggedsubTask;
+
+  
+  function dragStart(event) {
+    draggedTask = event.target;
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", event.target.dataset.id);
+  }
+  
+  function dragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+  
+  function drop(event) {
+    event.preventDefault();
+  
+    // Get the IDs of the tasks being swapped
+    const draggedId = draggedTask.dataset.id;
+    const droppedId = event.target.dataset.id;
+    console.log(draggedId);
+    console.log(droppedId);
+
+    var temp = todos[draggedId];
+    todos[draggedId] = todos[droppedId];
+    todos[droppedId] = temp;
+    localStorage.setItem("todo-list", JSON.stringify(todos));
+    showTodo("all");
+    
+  }
+
+//SUB TASKS
+    
+  function dragStart1(event) {
+    draggedTask = event.target;
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", event.target.dataset.id);
+  }
+  
+  function dragOver1(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+  
+  function drop1(event) {
+    event.preventDefault();
+  
+    // Get the IDs of the tasks being swapped
+    const draggedId = draggedTask.dataset.id;
+    const droppedId = event.target.dataset.id;
+    var task_id = draggedId.split('/')[0];
+    var subtask_draggedId = draggedId.split('/')[1];
+    var subtask_droppedId = droppedId.split('/')[1];
+
+    var temp = todos[task_id].sub_task[subtask_draggedId];
+    todos[task_id].sub_task[subtask_draggedId] = todos[task_id].sub_task[subtask_droppedId];
+    todos[task_id].sub_task[subtask_droppedId] = temp;
+
+    localStorage.setItem("todo-list", JSON.stringify(todos));
+    showTodo("all");
+    
+  }

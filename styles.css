@@ -140,6 +140,17 @@ body{
   padding: 18px 25px;
   border-bottom: 1px solid #ccc;
 }
+
+.controls1{
+  padding: 18px 25px;
+  border-bottom: 1px solid #ccc;
+  margin: 50px;
+  background-color:lightgray;
+  border-radius: 10px;
+  height: 1000px;
+}
+
+
 .filters span{
   margin: 0 8px;
   font-size: 17px;
@@ -199,7 +210,6 @@ body{
   margin-bottom: 18px;
   padding-bottom: 16px;
   align-items: flex-start;
-  border-bottom: 1px solid #ccc;
 }
 .task-box .task:last-child{
   margin-bottom: 0;
