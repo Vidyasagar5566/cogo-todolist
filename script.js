@@ -81,8 +81,8 @@ function showTodo(filter) {
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
-    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    //!checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 function fetchTodos(){
@@ -131,8 +131,8 @@ function fetchTodos(){
     }
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
-    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    //!checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 
@@ -244,7 +244,8 @@ add_task.addEventListener("click", () => {
         taskInput3.value = "";
         taskInput4.value = "";
         localStorage.setItem("todo-list", JSON.stringify(todos));
-        showTodo(document.querySelector("span.active").id);
+    showTodo("all");
+        //showTodo(document.querySelector("span.active").id);
     
 });
 
