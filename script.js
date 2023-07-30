@@ -26,6 +26,7 @@ add_task = document.querySelector(".add_task_button"),
 taskBox = document.querySelector(".task-box");
 let editId,
 isEditTask = false,
+//todos = JSON.parse(localStorage.clear("todo-list"));
 todos = JSON.parse(localStorage.getItem("todo-list"));
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -83,7 +84,7 @@ function showTodo(filter) {
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
     !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 function fetchTodos(){
@@ -133,7 +134,7 @@ function fetchTodos(){
     taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
     let checkTask = taskBox.querySelectorAll(".task");
     !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
-    taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+    //taskBox.offsetHeight >= 1000 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
 }
 
 
@@ -147,7 +148,7 @@ function view_sub_tasks(id) {
     todos = JSON.parse(localStorage.getItem("todo-list"));
     let liTag = "<h2>Sub Tasks</h2>";
     todos[id].sub_task.forEach((task,id1) => {
-        liTag += `<li draggable="true" style = "cursor: grab;" class = "subtask" data-id="${id}/${id1}">${task.sub_task}</li>`;
+        liTag += `<li draggable="true" style = "cursor: grab;" class = "task" data-id="${id}/${id1}">${task.sub_task}</li>`;
     });
     subtaskBox.innerHTML = liTag;
 }
@@ -157,7 +158,12 @@ function Add_sub_tasks(id) {
     const taskInput5 = document.querySelector(test);
     let text = taskInput5.value.trim();
     taskInput5.value = "";
-    todos[id].sub_task.splice(0, 0, {'sub_task':text});
+    if (text){
+        todos[id].sub_task.splice(0, 0, {'sub_task':text});
+    }
+   else{
+    alert("empty cannot be added;");
+   }
     localStorage.setItem("todo-list", JSON.stringify(todos));
 
     view_sub_tasks(id);
@@ -192,7 +198,8 @@ function updateStatus(selectedTask) {
         todos[selectedTask.id].status = "pending";
     }
     localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo("all");
+    //showTodo("all");
+    location.reload();
 }
 function editTask(taskId, name,catogery,tag,priority,due_date) {
     editId = taskId;
@@ -214,13 +221,15 @@ function deleteTask(deleteId, filter) {
     isEditTask = false;
     todos.splice(deleteId, 1);
     localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo(filter);
+    //showTodo("all");
+    location.reload();
 }
 clearAll.addEventListener("click", () => {
     isEditTask = false;
     todos.splice(0, todos.length);
     localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo()
+    //showTodo("all");
+    location.reload();
 });
 add_task.addEventListener("click", () => {
     let userTask = taskInput.value.trim();
@@ -248,7 +257,8 @@ add_task.addEventListener("click", () => {
         taskInput3.value = "";
         taskInput4.value = "";
         localStorage.setItem("todo-list", JSON.stringify(todos));
-        showTodo(document.querySelector("span.active").id);
+        //showTodo("all");
+        location.reload();
     
 });
 
@@ -257,7 +267,6 @@ add_task.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const tasks = document.querySelectorAll(".task");
-    const subtasks = document.querySelectorAll(".subtask");
   
     tasks.forEach(task => {
       task.addEventListener("dragstart", dragStart);
@@ -265,15 +274,11 @@ document.addEventListener("DOMContentLoaded", function () {
       task.addEventListener("drop", drop);
     });
 
-    subtasks.forEach(subtask => {
-        subtask.addEventListener("dragstart", dragStart1);
-        subtask.addEventListener("dragover", dragOver1);
-        subtask.addEventListener("drop", drop1);
-      });
   });
   
   
   let draggedTask;
+
 
   
   function dragStart(event) {
@@ -296,44 +301,32 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(draggedId);
     console.log(droppedId);
 
-    var temp = todos[draggedId];
-    todos[draggedId] = todos[droppedId];
-    todos[droppedId] = temp;
-    localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo("all");
-    
-  }
+    var div = draggedId.split('/');
+    if (div.length == 2){
+        var task_id = draggedId.split('/')[0];
+        console.log(task_id);
+        var subtask_draggedId = draggedId.split('/')[1];
+        var subtask_droppedId = droppedId.split('/')[1];
+        console.log(subtask_draggedId);
+        console.log(subtask_droppedId);
 
-//SUB TASKS
-    
-  function dragStart1(event) {
-    draggedTask = event.target;
-    event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData("text/plain", event.target.dataset.id);
-  }
-  
-  function dragOver1(event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }
-  
-  function drop1(event) {
-    event.preventDefault();
-  
-    // Get the IDs of the tasks being swapped
-    const draggedId = draggedTask.dataset.id;
-    const droppedId = event.target.dataset.id;
-    console.log(draggedId);
-    console.log(droppedId);
-    var task_id = draggedId.split('/')[0];
-    var subtask_draggedId = draggedId.split('/')[1];
-    var subtask_droppedId = droppedId.split('/')[1];
+        var temp = todos[task_id].sub_task[subtask_draggedId];
+        todos[task_id].sub_task[subtask_draggedId] = todos[task_id].sub_task[subtask_droppedId];
+        todos[task_id].sub_task[subtask_droppedId] = temp;
 
-    var temp = todos[task_id].sub_task[subtask_draggedId];
-    todos[task_id].sub_task[subtask_draggedId] = todos[task_id].sub_task[subtask_droppedId];
-    todos[task_id].sub_task[subtask_droppedId] = temp;
+        localStorage.setItem("todo-list", JSON.stringify(todos));
+        //showTodo("all");
+        location.reload();
+    }
 
-    localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo("all");
-    
-  }
+    else{
+        var temp = todos[draggedId];
+        todos[draggedId] = todos[droppedId];
+        todos[droppedId] = temp;
+        
+        localStorage.setItem("todo-list", JSON.stringify(todos));
+        //showTodo("all");
+        location.reload();
+    }
+      
+}
